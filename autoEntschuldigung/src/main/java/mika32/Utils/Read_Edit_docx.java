@@ -11,6 +11,14 @@ public class Read_Edit_docx {
 
     public static XWPFDocument readDocx(){
         try {
+            FileInputStream fis = new FileInputStream("/Users/mikadobrowolski/autoEntschuldigungen/autoEntschuldigung/src/main/resources/Docs/autoEnt.docx");
+            return new XWPFDocument(fis);
+
+        }catch (Exception e){
+            System.out.println("Could not find docx");
+        }
+
+        try {
             FileInputStream fis = new FileInputStream("C:/Users/Mika/OneDrive/Desktop/schule/Entschuldigungen/allgemein/automat/autoEnt.docx");
             return new XWPFDocument(fis);
 

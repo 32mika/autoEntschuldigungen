@@ -15,6 +15,7 @@ import java.util.Iterator;
 
 import com.toedter.calendar.*;
 import mika32.Main;
+import mika32.Utils.PathValidation;
 
 public class Main_Frame {
     JFrame frame;
@@ -24,6 +25,7 @@ public class Main_Frame {
     JDateChooser  startDatumAuswahl;
     JDateChooser endDatumAuswahl;
     JTextField box_name;
+    JTextField speichernField;
     JToggleButton zeitraum;
     JToggleButton datum;
     Font smallFont = new Font("Arial", Font.BOLD,20);
@@ -62,6 +64,7 @@ public class Main_Frame {
         txtB_name();
         datumAuswahl();
         eingabeDatum();
+        txtB_speichern();
         standartWerte_Check();
         generierenButton();
     }
@@ -101,6 +104,14 @@ public class Main_Frame {
             public void actionPerformed(ActionEvent e) {
                 try {       // prüfen ob generieren sinn macht
                     Main.student_name = box_name.getText();
+
+                    // Pfard test und einfügen
+                    if(PathValidation.test(speichernField.getText())){
+                        Main.pathToSave = speichernField.getText();
+                    }else {
+                        System.out.println("In den else beim pfard gefallen!");
+                        Main.pathToSave = "/Users/mikadobrowolski/Desktop";
+                    }
 
                     if(datum.isSelected()){
                         Main.einzelnesDatum = true;
@@ -160,7 +171,7 @@ public class Main_Frame {
     private void standartWerte_Check(){
         JCheckBox standartWerte = new JCheckBox();
 
-        standartWerte.setBounds(60, 370, 400, 40);
+        standartWerte.setBounds(60, 430, 400, 40);
         standartWerte.setVisible(true);
 
         standartWerte.setFont(smallFont);
@@ -224,7 +235,7 @@ public class Main_Frame {
     private void txtB_name_box(){
         box_name = new JTextField("Vorname Nachname",  20);
 
-        box_name.setBounds(234, 143, 153, 25);
+        box_name.setBounds(234, 140, 153, 35);
         box_name.setForeground(Color.gray);
 
         box_name.addFocusListener(new FocusAdapter() {
@@ -251,11 +262,6 @@ public class Main_Frame {
         mainPanel.add(box_name);
     }
 
-    public String getNameContent(){
-        System.out.println(box_name.getText());
-        return box_name.getText();
-    }
-
     private void datumAuswahl(){
         datum = new JToggleButton();
         zeitraum = new JToggleButton();
@@ -264,6 +270,8 @@ public class Main_Frame {
 
         datum = buttonBuild("einzel Datum", 60, 200);
         zeitraum = buttonBuild("Zeitraum", 260, 200);
+
+
 
         dateSelect.add(datum);
         dateSelect.add(zeitraum);
@@ -290,10 +298,6 @@ public class Main_Frame {
 
         mainPanel.add(zeitraum);
         mainPanel.add(datum);
-    }
-
-    public boolean getAuswahlDatum(){
-        return datum.isSelected();
     }
 
     private void eingabeDatum(){
@@ -324,9 +328,6 @@ public class Main_Frame {
         mainPanel.add(dateChooserPanel);
     }
 
-    public Date getStartDatum(){
-        return startDatumAuswahl.getDate();
-    }
 
     private JToggleButton buttonBuild(String txt, int x, int y){
         JToggleButton button = new JToggleButton();
@@ -343,7 +344,46 @@ public class Main_Frame {
         
         return button;
     }
-    
+
+    private void txtB_speichern(){
+        JLabel speichernLabel = new JLabel();
+        speichernField = new JTextField("Speicherpfard",  20);
+
+        speichernLabel.setFont(smallFont);
+        speichernLabel.setForeground(new Color(0, 0, 0));
+        speichernLabel.setBounds(60,370,500,35);
+        speichernLabel.setText("Speicherpfard*:");
+
+        
+
+        speichernField.setBounds(234, 370, 153, 35);
+        speichernField.setForeground(Color.gray);
+
+        speichernField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(speichernField.getText().equals("Speicherpfard")){
+                    System.out.println("Focus bekommen");
+                    speichernField.setText("");
+                    speichernField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(speichernField.getText().equals("Speicherpfard") | speichernField.getText().equals("")){
+                    System.out.println("verloren fokus");
+                    speichernField.setText("Speicherpfard");
+                    speichernField.setForeground(Color.gray);
+                }
+            }
+
+        });
+
+        mainPanel.add(speichernField);
+        mainPanel.add(speichernLabel);
+    }
+
     private void titel(){
         JLabel titel = new JLabel();
 

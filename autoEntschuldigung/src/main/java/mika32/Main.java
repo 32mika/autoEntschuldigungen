@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Main {
     public static String date = "27.06.2023";
     public static String student_name = "Mika Dobrowolski";
-    public static String pathToSave = "C:/Users/Mika/OneDrive/Desktop/schule/Entschuldigungen/allgemein/automat/done/";
+    public static String pathToSave = "/Desktop/schule/Entschuldigungen/allgemein/automat/done/";
     public static ArrayList<String> dates = new ArrayList<>();
     public static XWPFDocument doc;
     public static boolean einzelnesDatum = true;
@@ -70,8 +70,6 @@ public class Main {
         bigDoc.write(fos1);
         bigDoc.close();
         fos1.close();
-
-
 
         try {
             PrintDocument.print(pathToSave);

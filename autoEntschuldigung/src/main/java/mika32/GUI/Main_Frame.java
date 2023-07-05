@@ -15,10 +15,12 @@ import java.util.Iterator;
 
 import com.toedter.calendar.*;
 import mika32.Main;
+import mika32.Save.save;
 import mika32.Utils.PathValidation;
 
 public class Main_Frame {
     JFrame frame;
+    JCheckBox standartWerte;
     JPanel menu_Panel;
     JPanel pan_Name;
     JPanel mainPanel;
@@ -102,15 +104,18 @@ public class Main_Frame {
         generierenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {       // prüfen ob generieren sinn macht
-                    Main.student_name = box_name.getText();
+                Main.student_name = box_name.getText() + "\t\t\t\t\t\t\t\t\t\t                                                                                                                   ";
+                save.setStudentname(box_name.getText());
+                Main.safeCon = standartWerte.isSelected();
 
-                    // Pfard test und einfügen
+                try {
                     if(PathValidation.test(speichernField.getText())){
-                        Main.pathToSave = speichernField.getText();
+                        Main.pathToSave = speichernField.getText() + "/";
+                        save.setSpeicherPath(Main.pathToSave);
                     }else {
                         System.out.println("In den else beim pfard gefallen!");
                         Main.pathToSave = "/Users/mikadobrowolski/Desktop";
+                        save.setSpeicherPath(Main.pathToSave);
                     }
 
                     if(datum.isSelected()){
@@ -169,7 +174,7 @@ public class Main_Frame {
     }
 
     private void standartWerte_Check(){
-        JCheckBox standartWerte = new JCheckBox();
+        standartWerte = new JCheckBox();
 
         standartWerte.setBounds(60, 430, 400, 40);
         standartWerte.setVisible(true);
@@ -260,6 +265,10 @@ public class Main_Frame {
         });
 
         mainPanel.add(box_name);
+    }
+
+    public void setBoxText(String s){
+        box_name.setText(s);
     }
 
     private void datumAuswahl(){
@@ -384,6 +393,10 @@ public class Main_Frame {
         mainPanel.add(speichernLabel);
     }
 
+    public void setSpeichernFiel(String s){
+        speichernField.setText(s);
+    }
+
     private void titel(){
         JLabel titel = new JLabel();
 
@@ -399,7 +412,7 @@ public class Main_Frame {
 
     private void picto_title(){
         JLabel picto_text = new JLabel();
-        ImageIcon report = new ImageIcon("C:/Users/Mika/IdeaProjects/autoEntschuldigung/src/main/resources/Pictures/report_white.png");
+        ImageIcon report = new ImageIcon("/Users/mikadobrowolski/autoEntschuldigungen/autoEntschuldigung/src/main/resources/Pictures/report_white.png");
 
         Image image = report.getImage();
         Image scaledImage = image.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
@@ -429,7 +442,7 @@ public class Main_Frame {
     }
 
     private void filler(){
-        ImageIcon clock = new ImageIcon("C:/Users/Mika/IdeaProjects/autoEntschuldigung/src/main/resources/Pictures/Uhr-weiß.png");
+        ImageIcon clock = new ImageIcon("/Users/mikadobrowolski/autoEntschuldigungen/autoEntschuldigung/src/main/resources/Pictures/Uhr-weiß.png");
 
         Image image = clock.getImage();
         Image scaledImage = image.getScaledInstance(25, 25, Image.SCALE_SMOOTH);

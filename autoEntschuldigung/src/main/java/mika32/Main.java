@@ -1,10 +1,8 @@
 package mika32;
 
 import mika32.GUI.Main_Frame;
-import mika32.Utils.MergeDocs;
-import mika32.Utils.PrintDocument;
-import mika32.Utils.Read_Edit_docx;
-import mika32.Utils.SaveFile;
+import mika32.Save.save;
+import mika32.Utils.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.File;
@@ -13,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
+    private static Config config;
+    public static boolean safeCon = false;
     public static String date = "27.06.2023";
     public static String student_name = "Mika Dobrowolski";
     public static String pathToSave = "/Desktop/schule/Entschuldigungen/allgemein/automat/done/";
@@ -23,7 +23,9 @@ public class Main {
     public static ArrayList<XWPFDocument> docs = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
+        config = new Config();
         Main_Frame frame = new Main_Frame();
+        save.setAll(frame);
         frame.frame_done();
     }
 
@@ -66,15 +68,25 @@ public class Main {
             }
         }
 
+        if(safeCon){
+            save.saveAll();
+            config.save();
+        }
+
         FileOutputStream fos1 = new FileOutputStream(pathToSave +"/print/printable.docx");
         bigDoc.write(fos1);
         bigDoc.close();
         fos1.close();
 
         try {
-            PrintDocument.print(pathToSave);
+            PrintDocument.save(pathToSave);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Config getConfig1() {
+        //TTTTTT
+        return config;
     }
 }

@@ -28,9 +28,14 @@ public class MergeDocs {
     private static XWPFDocument mergeDocuments(List<XWPFDocument> documents) {
         XWPFDocument mergedDocument = new XWPFDocument();
 
-        for (XWPFDocument document : documents) {
+        int documentCount = documents.size();
+        for (int i = 0; i < documentCount; i++) {
+            XWPFDocument document = documents.get(i);
             copyBodyElements(document, mergedDocument);
-            addPageBreak(mergedDocument);
+
+            if (i < documentCount - 1) {
+                addPageBreak(mergedDocument);
+            }
         }
 
         return mergedDocument;

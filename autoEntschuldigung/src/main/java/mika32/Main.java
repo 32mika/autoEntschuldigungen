@@ -1,9 +1,11 @@
 package mika32;
 
 import mika32.GUI.Main_Frame;
+import mika32.GUI.openWindow;
 import mika32.Save.save;
 import mika32.Utils.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -58,6 +60,7 @@ public class Main {
 
         XWPFDocument bigDoc = MergeDocs.merge(filepaths);
 
+
         File file = new File(pathToSave +"/print/printable.docx");
         File parentDir = file.getParentFile();
 
@@ -73,6 +76,7 @@ public class Main {
             config.save();
         }
 
+
         FileOutputStream fos1 = new FileOutputStream(pathToSave +"/print/printable.docx");
         bigDoc.write(fos1);
         bigDoc.close();
@@ -83,6 +87,16 @@ public class Main {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        openWindow.sucsess();
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.exit(1);
     }
 
     public static Config getConfig1() {

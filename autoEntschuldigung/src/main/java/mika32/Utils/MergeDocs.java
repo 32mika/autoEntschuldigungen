@@ -21,6 +21,8 @@ public class MergeDocs {
 
         XWPFDocument mergedDocument = mergeDocuments(docs);
         System.out.println("Documents merged successfully.");
+
+
         return mergedDocument;
 
     }
@@ -45,10 +47,20 @@ public class MergeDocs {
         List<XWPFParagraph> paragraphs = sourceDocument.getParagraphs();
         List<XWPFTable> tables = sourceDocument.getTables();
 
+
         for (XWPFParagraph paragraph : paragraphs) {
             XWPFParagraph newParagraph = targetDocument.createParagraph();
             newParagraph.getCTP().set(paragraph.getCTP());
         }
+
+        /*
+        for (XWPFParagraph par : paragraphs){
+            System.out.println("Text");
+            System.out.println(par.getText());
+        }
+
+         */
+
 
         for (XWPFTable table : tables) {
             XWPFTable newTable = targetDocument.createTable();

@@ -1,6 +1,8 @@
 package mika32.GUI;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -37,6 +39,7 @@ public class Main_Frame {
     Color purpleBack = new Color(81, 8, 157);
     Color menuPanelBack = new Color(39, 4, 76);
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
 
     public Main_Frame(){
         frame = new JFrame();
@@ -104,14 +107,24 @@ public class Main_Frame {
         generierenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.student_name = box_name.getText() + "\t\t\t\t\t\t\t\t\t\t                                                                                                                   ";
+                int d = Main.student_name.length();
+                String leerzeichen = "";
+
+                for(int i = d; i < 123; i++){
+                    leerzeichen = leerzeichen + " ";
+                }
+
+                System.out.println("Name länge " + box_name.getText().length());
+                System.out.println("Leerzeichen länge " + leerzeichen.length());
+
+                Main.student_name = box_name.getText() + leerzeichen;
                 save.setStudentname(box_name.getText());
                 Main.safeCon = standartWerte.isSelected();
 
                 try {
                     if(PathValidation.test(speichernField.getText())){
                         Main.pathToSave = speichernField.getText() + "/";
-                        save.setSpeicherPath(Main.pathToSave);
+                        save.setSpeicherPath(speichernField.getText());
                     }else {
                         System.out.println("In den else beim pfard gefallen!");
                         Main.pathToSave = "/Users/mikadobrowolski/Desktop";
@@ -263,6 +276,24 @@ public class Main_Frame {
             }
 
         });
+
+        box_name.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+
 
         mainPanel.add(box_name);
     }

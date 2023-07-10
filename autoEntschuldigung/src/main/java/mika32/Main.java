@@ -16,6 +16,8 @@ public class Main {
     private static Config config;
     public static boolean safeCon = false;
     public static String date = "27.06.2023";
+    public static String straßeNr = "";
+    public static String plzOrt = "";
     public static String student_name = "Mika Dobrowolski";
     public static String pathToSave = "/Desktop/schule/Entschuldigungen/allgemein/automat/done/";
     public static ArrayList<String> dates = new ArrayList<>();
@@ -37,6 +39,8 @@ public class Main {
         if(einzelnesDatum){
             Read_Edit_docx.editDocx(doc, "(Datum)", date);
             Read_Edit_docx.editDocx(doc, "(Name)", student_name);
+            Read_Edit_docx.editDocx(doc, "(StraßeNr)", straßeNr);
+            Read_Edit_docx.editDocx(doc, "(PlzOrt)", plzOrt);
             SaveFile.save(doc, date);
             doc.close();
 
@@ -48,6 +52,8 @@ public class Main {
 
                 Read_Edit_docx.editDocx(doc2, "(Datum)", s);
                 Read_Edit_docx.editDocx(doc2, "(Name)", student_name);
+                Read_Edit_docx.editDocx(doc2, "(StrNr)", straßeNr);
+                Read_Edit_docx.editDocx(doc2, "(PlzOrt)", plzOrt);
                 SaveFile.save(doc2, s);
                 docs.add(doc2);
             }
@@ -100,7 +106,7 @@ public class Main {
     }
 
     public static Config getConfig1() {
-        //TTTTTT
+        //
         return config;
     }
 }

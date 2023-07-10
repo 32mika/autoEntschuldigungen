@@ -30,6 +30,10 @@ public class Main_Frame {
     JDateChooser endDatumAuswahl;
     JTextField box_name;
     JTextField speichernField;
+    JLabel straßeLabel;
+    JTextField straßeField;
+    JLabel ortLabel;
+    JTextField ortField;
     JToggleButton zeitraum;
     JToggleButton datum;
     Font smallFont = new Font("Arial", Font.BOLD,20);
@@ -47,7 +51,7 @@ public class Main_Frame {
         menu_Panel = new JPanel();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(750, 600);
+        frame.setSize(750, 650);
         frame.setLayout(new BorderLayout());
 
         frame.setLocationRelativeTo(null);
@@ -70,6 +74,7 @@ public class Main_Frame {
         datumAuswahl();
         eingabeDatum();
         txtB_speichern();
+        addresseBox();
         standartWerte_Check();
         generierenButton();
     }
@@ -95,7 +100,7 @@ public class Main_Frame {
     private void generierenButton(){
         JButton generierenButton = new JButton();
 
-        generierenButton.setBounds(150, 495, 200, 50);
+        generierenButton.setBounds(150, 560, 200, 50);
         generierenButton.setFocusPainted(false);
 
         generierenButton.setBackground(purpleBack);
@@ -118,8 +123,13 @@ public class Main_Frame {
                 System.out.println("Leerzeichen länge " + leerzeichen.length());
 
                 Main.student_name = box_name.getText() + leerzeichen;
-                save.setStudentname(box_name.getText());
+                Main.plzOrt = ortField.getText();
+                Main.straßeNr = straßeField.getText();
                 Main.safeCon = standartWerte.isSelected();
+
+                save.setStudentname(box_name.getText());
+                save.setOrtPlz(ortField.getText());
+                save.setStraßeHsNr(straßeField.getText());
 
                 try {
                     if(PathValidation.test(speichernField.getText())){
@@ -189,7 +199,7 @@ public class Main_Frame {
     private void standartWerte_Check(){
         standartWerte = new JCheckBox();
 
-        standartWerte.setBounds(60, 430, 400, 40);
+        standartWerte.setBounds(60, 510, 400, 40);
         standartWerte.setVisible(true);
 
         standartWerte.setFont(smallFont);
@@ -205,7 +215,7 @@ public class Main_Frame {
         smallTitel.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
         smallTitel.setForeground(new Color(0, 0, 0));
         smallTitel.setBounds(60,10,250,25);
-        smallTitel.setText("Hier kommt noch text hin");
+        //smallTitel.setText("Hier kommt noch text hin");
         
         mainPanel.add(smallTitel);
     }
@@ -256,6 +266,7 @@ public class Main_Frame {
         box_name.setBounds(234, 140, 153, 35);
         box_name.setForeground(Color.gray);
 
+
         box_name.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -277,30 +288,14 @@ public class Main_Frame {
 
         });
 
-        box_name.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-        });
-
-
         mainPanel.add(box_name);
     }
 
     public void setBoxText(String s){
         box_name.setText(s);
+        box_name.setForeground(Color.BLACK);
     }
+
 
     private void datumAuswahl(){
         datum = new JToggleButton();
@@ -426,8 +421,110 @@ public class Main_Frame {
 
     public void setSpeichernFiel(String s){
         speichernField.setText(s);
+        speichernField.setForeground(Color.BLACK);
+    }
+    
+    private void addresseBox(){
+        ortLabelBox();
+        straßeLabelBox();
+        
+        
+    }
+    
+    private void ortLabelBox(){
+        ortLabel = new JLabel();
+        ortField = new JTextField();
+        int y = 420;
+        
+
+        ortLabel.setBounds(60, y, 185, 35);
+        ortLabel.setText("PLZ und Ort*:");
+        ortLabel.setForeground(Color.BLACK);
+        ortLabel.setFont(smallFont);
+
+        ortField = new JTextField("Postleitzahl Ort",  20);
+        ortField.setForeground(Color.GRAY);
+        ortField.setBounds(234, y, 153, 35);
+
+        JTextField finalOrtField = ortField;
+
+        ortField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent d) {
+                if(finalOrtField.getText().equals("Postleitzahl Ort")){
+                    System.out.println("Focus bekommen1");
+                    finalOrtField.setText("");
+                    finalOrtField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent d) {
+                if(finalOrtField.getText().equals("Postleitzahl Ort") | finalOrtField.getText().equals("")){
+                    System.out.println("verloren fokus2");
+                    finalOrtField.setText("Postleitzahl Ort");
+                    finalOrtField.setForeground(Color.gray);
+                }
+            }
+
+        });
+
+        mainPanel.add(ortLabel);
+        mainPanel.add(ortField);
     }
 
+    public void setOrtFieldText(String s){
+        ortField.setText(s);
+        ortField.setForeground(Color.BLACK);
+    }
+    
+    private void straßeLabelBox(){
+        straßeLabel = new JLabel();
+        straßeField = new JTextField();
+        int y = 470;
+
+
+        straßeLabel.setBounds(60, y, 185, 35);
+        straßeLabel.setText("Straße und HsNr*:");
+        straßeLabel.setForeground(Color.BLACK);
+        straßeLabel.setFont(smallFont);
+
+        straßeField = new JTextField("Straße Hausnummer",  20);
+        straßeField.setForeground(Color.GRAY);
+        straßeField.setBounds(234, y, 153, 35);
+
+        JTextField finalstraßeField = straßeField;
+
+        straßeField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent d) {
+                if(finalstraßeField.getText().equals("Straße Hausnummer")){
+                    System.out.println("Focus bekommen1");
+                    finalstraßeField.setText("");
+                    finalstraßeField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent d) {
+                if(finalstraßeField.getText().equals("Straße Hausnummer") | finalstraßeField.getText().equals("")){
+                    System.out.println("verloren fokus2");
+                    finalstraßeField.setText("Straße Hausnummer");
+                    finalstraßeField.setForeground(Color.gray);
+                }
+            }
+
+        });
+
+        mainPanel.add(straßeLabel);
+        mainPanel.add(straßeField);
+    }
+
+    public void setStraßeFieldText(String s){
+        straßeField.setText(s);
+        straßeField.setForeground(Color.BLACK);
+    }
+    
     private void titel(){
         JLabel titel = new JLabel();
 
@@ -451,7 +548,7 @@ public class Main_Frame {
 
         picto_text.setBounds(65, 130, 132, 25);
 
-        picto_text.setFont(smallFont); // hier war eigentlich 18
+        picto_text.setFont(smallFont);
         picto_text.setForeground(Color.white);
         picto_text.setText("autoEnt");
 
@@ -485,7 +582,7 @@ public class Main_Frame {
 
             filler.setBounds(65, 185 + i * 50, 132, 25);
 
-            filler.setFont(smallFont); // Hier war auch 18
+            filler.setFont(smallFont);
             filler.setForeground(Color.white);
             filler.setText("Soon");
 

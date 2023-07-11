@@ -10,21 +10,29 @@ public class Read_Edit_docx {
     public static String txt = "";
 
     public static XWPFDocument readDocx(){
+        String currentDirectory = System.getProperty("user.dir");
+        System.out.println("Current Directory: " + currentDirectory);
+
+        /*
         try {
-            FileInputStream fis = new FileInputStream("/Users/mikadobrowolski/autoEntschuldigungen/autoEntschuldigung/src/main/resources/Docs/autoEnt.docx");
+            FileInputStream fis = new FileInputStream("/src/main/resources/Docs/autoEnt.docx");
+            System.out.println("Read the file");
             return new XWPFDocument(fis);
 
         }catch (Exception e){
             System.out.println("Could not find docx");
         }
 
-        try {
-            FileInputStream fis = new FileInputStream("C:/Users/Mika/OneDrive/Desktop/schule/Entschuldigungen/allgemein/automat/autoEnt.docx");
-            return new XWPFDocument(fis);
+         */
 
+        try{
+            FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/classes/Docs/autoEnt.docx");
+            System.out.println("Got File");
+            return new XWPFDocument(fis);
         }catch (Exception e){
-            System.out.println("Could not find docx");
+            System.out.println("Failed to read doc");
         }
+
         return null;
     }
 

@@ -1,5 +1,6 @@
 package mika32.Utils;
 
+import mika32.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class Config {
     }
 
     public Config(){
-        File dir = new File("/Users/mikadobrowolski/Desktop/Entschuldigungen/data/");
+        File dir = new File(System.getProperty("user.dir") + "/Entschuldigungen/Data");
 
         if(!dir.exists()){
             dir.mkdirs();
@@ -43,5 +44,4 @@ public class Config {
 
         }
     }
-
 }

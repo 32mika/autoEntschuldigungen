@@ -7,7 +7,6 @@ import java.io.IOException;
 public class PrintDocument {
 
     public static void save(String path) throws Exception {
-        // Set the document file path
         System.out.println(path);
         openExplorer(path);
 

@@ -5,7 +5,6 @@ import mika32.GUI.openWindow;
 import mika32.Save.save;
 import mika32.Utils.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,7 +18,7 @@ public class Main {
     public static String straßeNr = "";
     public static String plzOrt = "";
     public static String student_name = "Mika Dobrowolski";
-    public static String pathToSave = "/Desktop/schule/Entschuldigungen/allgemein/automat/done/";
+    public static String pathToSave = System.getProperty("user.dir") + "/Entschuldigungen";
     public static ArrayList<String> dates = new ArrayList<>();
     public static XWPFDocument doc;
     public static boolean einzelnesDatum = true;
@@ -39,7 +38,7 @@ public class Main {
         if(einzelnesDatum){
             Read_Edit_docx.editDocx(doc, "(Datum)", date);
             Read_Edit_docx.editDocx(doc, "(Name)", student_name);
-            Read_Edit_docx.editDocx(doc, "(StraßeNr)", straßeNr);
+            Read_Edit_docx.editDocx(doc, "(StrNr)", straßeNr);
             Read_Edit_docx.editDocx(doc, "(PlzOrt)", plzOrt);
             SaveFile.save(doc, date);
             doc.close();
@@ -66,16 +65,18 @@ public class Main {
 
         XWPFDocument bigDoc = MergeDocs.merge(filepaths);
 
-
-        File file = new File(pathToSave +"/print/printable.docx");
+        File file = new File(pathToSave +"/Entschuldigungen/print/printable.docx");
         File parentDir = file.getParentFile();
 
-        if (!parentDir.exists()) {
-            boolean created = parentDir.mkdirs();
-            if (!created) {
-                throw new IOException("Failed to create parent directories.");
+
+        try{
+            if (!parentDir.exists()) {
+                boolean created = parentDir.mkdirs();
             }
+        }catch (Exception e){
+            System.out.println("Throw an " + e + " Exception");
         }
+
 
         if(safeCon){
             save.saveAll();
@@ -83,7 +84,7 @@ public class Main {
         }
 
 
-        FileOutputStream fos1 = new FileOutputStream(pathToSave +"/print/printable.docx");
+        FileOutputStream fos1 = new FileOutputStream(pathToSave +"/Entschuldigungen/print/printable.docx");
         bigDoc.write(fos1);
         bigDoc.close();
         fos1.close();

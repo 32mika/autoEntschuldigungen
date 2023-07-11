@@ -137,7 +137,7 @@ public class Main_Frame {
                         save.setSpeicherPath(speichernField.getText());
                     }else {
                         System.out.println("In den else beim pfard gefallen!");
-                        Main.pathToSave = "/Users/mikadobrowolski/Desktop";
+                        Main.pathToSave = "./Desktop";
                         save.setSpeicherPath(Main.pathToSave);
                     }
 
@@ -187,7 +187,7 @@ public class Main_Frame {
             LocalDate date = iterator.next();
             DayOfWeek dayOfWeek = date.getDayOfWeek();
             if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-                iterator.remove(); // Entfernen Sie das aktuelle Datum
+                iterator.remove();
             }
         }
 
@@ -540,7 +540,7 @@ public class Main_Frame {
 
     private void picto_title(){
         JLabel picto_text = new JLabel();
-        ImageIcon report = new ImageIcon("/Users/mikadobrowolski/autoEntschuldigungen/autoEntschuldigung/src/main/resources/Pictures/report_white.png");
+        ImageIcon report = new ImageIcon("src/main/resources/Pictures/report_white.png");
 
         Image image = report.getImage();
         Image scaledImage = image.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
@@ -570,7 +570,7 @@ public class Main_Frame {
     }
 
     private void filler(){
-        ImageIcon clock = new ImageIcon("/Users/mikadobrowolski/autoEntschuldigungen/autoEntschuldigung/src/main/resources/Pictures/Uhr-weiß.png");
+        ImageIcon clock = new ImageIcon("src/main/resources/Pictures/Uhr-weiß.png");
 
         Image image = clock.getImage();
         Image scaledImage = image.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
